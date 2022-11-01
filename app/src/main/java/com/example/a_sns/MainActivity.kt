@@ -8,6 +8,7 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        // 아 학교 떄려치고 싶다 시발..
+        // 아 학교 정말 즐겁다 !
+        // 모두의 오머대학교 !
     }
 }
