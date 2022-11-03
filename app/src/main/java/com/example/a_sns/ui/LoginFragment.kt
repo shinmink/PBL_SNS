@@ -17,12 +17,13 @@ class LoginFragment : Fragment(R.layout.login_fragment) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val email = view.findViewById<EditText>(R.id.login_email).text.toString()
-        val password = view.findViewById<EditText>(R.id.login_password).text.toString()
 
         //click submit button
         val submitBtn = view.findViewById<Button>(R.id.login_submit)
         submitBtn.setOnClickListener {
+            val email = view.findViewById<EditText>(R.id.login_email).text.toString()
+            val password = view.findViewById<EditText>(R.id.login_password).text.toString()
+
             // null exception
             if (email.isEmpty() || password.isEmpty()) {
                 Toast.makeText(activity, "이메일 또는 비밀번호를 입력해주세요.", Toast.LENGTH_SHORT).show()
