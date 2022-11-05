@@ -1,14 +1,18 @@
 package com.example.a_sns
 
+import android.Manifest
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.Color
+import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
 import android.widget.ArrayAdapter
 import android.widget.Toast
+import androidx.activity.result.contract.ActivityResultContracts
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.widget.SearchView
 import androidx.core.content.ContextCompat
 import com.example.a_sns.databinding.ActivityMainBinding
@@ -30,6 +34,9 @@ class MainActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         initSetting()
+
+        // 알림 허용 설정
+        requestSinglePermission(Manifest.permission.ACCESS_NOTIFICATION_POLICY)
 
         // 사용자 셋팅
         auth = Firebase.auth
@@ -60,6 +67,35 @@ class MainActivity : AppCompatActivity() {
        )
          */
     }
+
+    // 알림 허가 받는 함수
+    private fun requestSinglePermission(permission: String) {
+        if (checkSelfPermission(permission) == PackageManager.PERMISSION_GRANTED)
+            return
+
+        val requestPermLauncher = registerForActivityResult(ActivityResultContracts.RequestPermission()) {
+            if (it == false) { // permission is not granted!
+                AlertDialog.Builder(this).apply {
+                    setTitle("Warning")
+                    setMessage(getString(R.string.no_permission, permission))
+                }.show()
+            }
+        }
+
+        if (shouldShowRequestPermissionRationale(permission)) {
+            // you should explain the reason why this app needs the permission.
+            AlertDialog.Builder(this).apply {
+                setTitle("Reason")
+                setMessage(getString(R.string.req_permission_reason, permission))
+                setPositiveButton("Allow") { _, _ -> requestPermLauncher.launch(permission) }
+                setNegativeButton("Deny") { _, _ -> }
+            }.show()
+        } else {
+            // should be called in onCreate()
+            requestPermLauncher.launch(permission)
+        }
+    }
+
 
     //TODO : 화면 초기 셋팅값 설정 함수
     private fun checkLocationPermission(): Boolean {
