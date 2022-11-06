@@ -7,6 +7,9 @@ import android.graphics.Color
 import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import androidx.fragment.app.Fragment
+import com.example.a_sns.ui.LoginFragment
+import com.example.a_sns.ui.RequestPermissionFragment
 import android.view.Menu
 import android.view.MenuItem
 import android.widget.ArrayAdapter
@@ -111,6 +114,24 @@ class MainActivity : AppCompatActivity() {
         return fineLocationPermission && coarseLocationPermission
     }
 
+        // start LoginFragment
+        //changeFragment(LoginFragment())
+
+        // start RequestPermissionFragment
+        changeFragment(RequestPermissionFragment())
+    }
+
+    // change Fragment
+    fun changeFragment(fragment: Fragment) {
+        supportFragmentManager.beginTransaction()
+            .setCustomAnimations(androidx.appcompat.R.anim.abc_fade_in, androidx.appcompat.R.anim.abc_fade_out)
+            .setReorderingAllowed(true)
+            .replace(R.id.frameLayout, fragment)
+            .addToBackStack(null)
+            .commit()
+    }
+}
+
 
 
     //TODO : 화면 초기 셋팅값 설정 함수
@@ -185,3 +206,4 @@ class MainActivity : AppCompatActivity() {
 
 
 }
+
