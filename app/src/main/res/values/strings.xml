@@ -1,5 +1,22 @@
 <resources>
 
+ 
+    <string name="follow">Follow</string>
+    <string name="post">Post</string>
+    <string name="count_0">0</string>
+    <string name="follower">Follower</string>
+    <string name="following">Following</string>
+    <string name="user_id">User_Id</string>
+    <string name="signout">Signout</string>
+    <string name="email">Email</string>
+    <string name="password">Password</string>
+    <string name="signin_email">Signin_Email</string>
+    <string name="home">Home</string>
+    <string name="search">Search</string>
+    <string name="upload_image">Upload_Image</string>
+    <string name="favorite">Favorite</string>
+    <string name="account">Account</string>
+    
     <string name="app_name">한성 SNS</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
