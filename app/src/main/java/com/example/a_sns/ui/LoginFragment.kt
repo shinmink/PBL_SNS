@@ -7,7 +7,7 @@ import android.widget.EditText
 import android.widget.TextView
 import android.widget.Toast
 import androidx.fragment.app.Fragment
-import com.example.a_sns.MainActivity
+import com.example.a_sns.StartActivity
 import com.example.a_sns.R
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
@@ -35,7 +35,7 @@ class LoginFragment : Fragment(R.layout.login_fragment) {
         //click register text
         val registerBtn = view.findViewById<TextView>(R.id.login_register)
         registerBtn.setOnClickListener {
-            (activity as MainActivity).changeFragment(RegisterFragment())
+            (activity as StartActivity).changeFragment(RegisterFragment())
         }
     }
 
