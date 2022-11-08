@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="black">#FF000000</color>
+    <color name="colorAccent">#FF4081</color>
+    <color name="colorDivision">#e0e0e0</color>
+    <color name="colorEmailSignIn">#009688</color>
+    <color name="colorEmailSignInPressed">#004D40</color>
+    <color name="colorGoogleSignIn">#d34836</color>
+    <color name="colorGoogleSignInPressed">#b02513</color>
+    <color name="colorLightGray">#f1f1f1</color>
+    <color name="colorNavIcon">#1d1d1d</color>
+    <color name="colorPrimary">#ededed</color>
+    <color name="colorPrimaryDark">#e1e1e1</color>
+    <color name="colorWhite">#FFFFFF</color>
+    <color name="purple_200">#FFBB86FC</color>
+    <color name="purple_500">#FF6200EE</color>
+    <color name="purple_700">#FF3700B3</color>
+    <color name="teal_200">#FF03DAC5</color>
+    <color name="teal_700">#FF018786</color>
+    <color name="white">#FFFFFFFF</color>
+    <string name="account">Account</string>
+    <string name="app_name">A_SNS</string>
+    <string name="count_0">0</string>
+    <string name="default_web_client_id" translatable="false">348343260951-nr6ci79lj6945tfogvhpif5o1tll7did.apps.googleusercontent.com</string>
+    <string name="email">Email</string>
+    <string name="favorite">Favorite</string>
+    <string name="follow">Follow</string>
+    <string name="follower">Follower</string>
+    <string name="following">Following</string>
+    <string name="gcm_defaultSenderId" translatable="false">348343260951</string>
+    <string name="google_api_key" translatable="false">AIzaSyB-0AI5biJI_Y1-gbMIKwejH8rIbctLTCE</string>
+    <string name="google_app_id" translatable="false">1:348343260951:android:6556a13e3c5635eae08952</string>
+    <string name="google_crash_reporting_api_key" translatable="false">AIzaSyB-0AI5biJI_Y1-gbMIKwejH8rIbctLTCE</string>
+    <string name="google_storage_bucket" translatable="false">a-pbl-sns.appspot.com</string>
+    <string name="home">Home</string>
+    <string name="password">Password</string>
+    <string name="post">Post</string>
+    <string name="project_id" translatable="false">a-pbl-sns</string>
+    <string name="search">Search</string>
+    <string name="signin_email">Signin_Email</string>
+    <string name="signout">Signout</string>
+    <string name="upload_image">Upload_Image</string>
+    <string name="user_id">User_Id</string>
+    <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
+        
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorAccent</item>
+    </style>
+    <style name="ButtonStyle" parent="Widget.AppCompat.Button.Colored">
+        <item name="colorButtonNormal">@color/colorWhite</item>
+    </style>
+    <style name="Theme.A_SNS" parent="Theme.MaterialComponents.DayNight.DarkActionBar">
+        
+        <item name="colorPrimary">@color/purple_500</item>
+        <item name="colorPrimaryVariant">@color/purple_700</item>
+        <item name="colorOnPrimary">@color/white</item>
+        
+        <item name="colorSecondary">@color/teal_200</item>
+        <item name="colorSecondaryVariant">@color/teal_700</item>
+        <item name="colorOnSecondary">@color/black</item>
+        
+        <item name="android:statusBarColor">?attr/colorPrimaryVariant</item>
+        
+    </style>
+</resources>
