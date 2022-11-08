@@ -8,7 +8,7 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AlertDialog
 import androidx.core.content.ContextCompat.checkSelfPermission
 import androidx.fragment.app.Fragment
-import com.example.a_sns.MainActivity
+import com.example.a_sns.StartActivity
 import com.example.a_sns.R
 
 class RequestPermissionFragment : Fragment(R.layout.request_permission_fragment) {
@@ -31,7 +31,7 @@ class RequestPermissionFragment : Fragment(R.layout.request_permission_fragment)
 
         // if permission is granted, start LoginFragment
         if (checkSelfPermission(requireContext(), READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED) {
-            (requireActivity() as MainActivity).changeFragment(LoginFragment())
+            (requireActivity() as StartActivity).changeFragment(LoginFragment())
             activity?.supportFragmentManager?.beginTransaction()?.remove(this)?.commit()
         }
 
@@ -52,7 +52,7 @@ class RequestPermissionFragment : Fragment(R.layout.request_permission_fragment)
                 setMessage("이 앱은 사진을 불러오기 위해 권한을 요청합니다.")
                 setPositiveButton("허용") { _, _ -> requestPermLauncher.launch(permission) }
                 setNegativeButton("거부") { _, _ ->
-                    (requireActivity() as MainActivity).finish()
+                    (requireActivity() as StartActivity).finish()
                 }
             }.show()
         } else {

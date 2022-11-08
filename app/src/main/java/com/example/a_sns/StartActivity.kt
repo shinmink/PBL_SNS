@@ -3,10 +3,9 @@ package com.example.a_sns
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.fragment.app.Fragment
-import com.example.a_sns.ui.LoginFragment
 import com.example.a_sns.ui.RequestPermissionFragment
 
-class MainActivity : AppCompatActivity() {
+class StartActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
