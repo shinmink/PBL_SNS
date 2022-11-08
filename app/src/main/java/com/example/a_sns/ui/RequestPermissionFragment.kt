@@ -45,6 +45,9 @@ class RequestPermissionFragment : Fragment(R.layout.request_permission_fragment)
         if (checkSelfPermission(requireActivity(), permission) == PackageManager.PERMISSION_GRANTED) // 권한 유무 확인
             return
 
+        // @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+
+
         if (shouldShowRequestPermissionRationale(permission)) { // 권한 설명 필수 여부 확인
             // you should explain the reason why this app needs the permission.
             AlertDialog.Builder(requireContext()).apply {
