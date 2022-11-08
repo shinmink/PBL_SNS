@@ -1,5 +1,6 @@
 package com.example.a_sns.ui
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import android.widget.Button
@@ -7,6 +8,7 @@ import android.widget.EditText
 import android.widget.TextView
 import android.widget.Toast
 import androidx.fragment.app.Fragment
+import com.example.a_sns.MainActivity
 import com.example.a_sns.StartActivity
 import com.example.a_sns.R
 import com.google.firebase.auth.ktx.auth
@@ -48,6 +50,7 @@ class LoginFragment : Fragment(R.layout.login_fragment) {
                         // 로그인이 성공했을 때
                         //val user = Firebase.auth.currentUser
                         Toast.makeText(activity, "로그인 성공", Toast.LENGTH_SHORT).show()
+                        startActivity(Intent(activity, MainActivity::class.java))
                     } else { // 로그인이 실패했을 때
                         Toast.makeText(activity, "로그인 실패. 이메일과 비밀번호를 다시 확인하세요.", Toast.LENGTH_SHORT).show()
                     }
