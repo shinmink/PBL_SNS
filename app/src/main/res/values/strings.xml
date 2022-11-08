@@ -1,5 +1,10 @@
 <resources>
+
     <string name="app_name">한성 SNS</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="long_notification_body">"This is very long notification body! This is very long notification body! This is very long notification body! This is very long notification body! This is very long notification body! This is very long notification body! "</string>
+    <string name="no_permission">App has no permission %1$s. Some features would not work correctly.</string>
+    <string name="req_permission_reason">App requires %1$s permission. Could you allow the permission?</string>
+
 </resources>
