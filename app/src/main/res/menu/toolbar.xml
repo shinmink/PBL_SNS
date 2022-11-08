@@ -3,9 +3,9 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <item
-        android:id="@+id/Posting_icon"
-        android:icon="@drawable/baseline_add_circle_24"
-        android:title="글쓰기"
+        android:id="@+id/Back_icon"
+        android:icon="@drawable/ic_arrow_back"
+        android:title="뒤로가기"
         app:showAsAction="always" />
     <item
         android:id="@+id/Alert_icon"
@@ -18,6 +18,8 @@
         android:icon="@drawable/ic_baseline_account_circle_24"
         android:title="내 프로필"
         app:showAsAction="always" />
+
+
 
 
 </menu>
