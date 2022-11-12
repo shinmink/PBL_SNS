@@ -3,7 +3,9 @@ package com.example.a_sns
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import com.example.a_sns.alert.NotifyFragment
 import com.example.a_sns.databinding.ActivityMainBinding
+import com.example.a_sns.search.SearchFragment
 import com.example.a_sns.ui.LoginFragment
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
@@ -39,7 +41,6 @@ class MainActivity : AppCompatActivity() {
             }
          */
 
-
         // 네비게이션 기본값
         bottom_navigation.selectedItemId = R.id.action_home
 
@@ -47,20 +48,43 @@ class MainActivity : AppCompatActivity() {
         bottom_navigation.setOnNavigationItemReselectedListener {
             when (it.itemId) {
                 R.id.action_home -> {
-                    val intent = Intent(this, MainActivity::class.java)
-                    startActivity(intent)
+                    val homeFragment = HomeFragment()
+                    val bundle = Bundle()
+                    val uid = FirebaseAuth.getInstance().currentUser?.uid
+                    supportFragmentManager
+                        .beginTransaction()
+                        .replace(R.id.main_content,homeFragment)
+                        .commit()
+
+                    return@setOnNavigationItemReselectedListener
                 }
                 R.id.action_search -> {
-                    val intent = Intent(this, SearchingActivity::class.java)
-                    startActivity(intent)
+                    val searchFragment = SearchFragment()
+                    val bundle = Bundle()
+                    val uid = FirebaseAuth.getInstance().currentUser?.uid
+                    supportFragmentManager
+                        .beginTransaction()
+                        .replace(R.id.main_content,searchFragment)
+                        .commit()
+
+                    return@setOnNavigationItemReselectedListener
                 }
                 R.id.action_posting -> {
                     val intent = Intent(this, PostingActivity::class.java)
                     startActivity(intent)
+
+                    return@setOnNavigationItemReselectedListener
                 }
                 R.id.action_alarm -> {
-                    val intent = Intent(this, NotifyActivity::class.java)
-                    startActivity(intent)
+                    val notifiyFragment = NotifyFragment()
+                    val bundle = Bundle()
+                    val uid = FirebaseAuth.getInstance().currentUser?.uid
+                    supportFragmentManager
+                        .beginTransaction()
+                        .replace(R.id.main_content,notifiyFragment)
+                        .commit()
+
+                    return@setOnNavigationItemReselectedListener
                 }
                 R.id.action_account -> {
                     val userFragment = UserFragment()
@@ -69,8 +93,12 @@ class MainActivity : AppCompatActivity() {
 
                     bundle.putString("destinationUid", uid)
                     userFragment.arguments = bundle
-                    supportFragmentManager.beginTransaction()
-                        .replace(R.id.main_content, userFragment).commit()
+                    supportFragmentManager
+                        .beginTransaction()
+                        .replace(R.id.main_content, userFragment)
+                        .commit()
+
+                    return@setOnNavigationItemReselectedListener
                 }
             }
         }

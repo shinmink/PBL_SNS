@@ -1,4 +1,4 @@
-package com.example.a_sns.Alert
+package com.example.a_sns.alert
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -17,17 +17,6 @@ import com.google.firebase.firestore.ListenerRegistration
 import kotlinx.android.synthetic.main.fragment_notify.view.*
 import kotlinx.android.synthetic.main.item_comment.view.*
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
-
-/**
- * A simple [Fragment] subclass.
- * Use the [NotifyFragment.newInstance] factory method to
- * create an instance of this fragment.
- */
 class NotifyFragment : Fragment() {
     // TODO: Rename and change types of parameters
     var notifySnapshot: ListenerRegistration? = null
@@ -60,7 +49,7 @@ class NotifyFragment : Fragment() {
                 .addSnapshotListener { querySnapshot, firebaseFirestoreException ->
                     AlertDTOList.clear()
                     if(querySnapshot == null)return@addSnapshotListener
-                    for (snapshot in querySnapshot?.documents!!) {
+                    for (snapshot in querySnapshot.documents) {
                         AlertDTOList.add(snapshot.toObject(AlertDTO::class.java)!!)
                     }
                     AlertDTOList.sortByDescending { it.timestamp }
