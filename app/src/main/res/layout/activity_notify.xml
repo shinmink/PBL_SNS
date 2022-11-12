@@ -1,27 +1,87 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".NotifyActivity">
+    >
 
+    <!-- Toolbar -->
     <androidx.appcompat.widget.Toolbar
-        android:id="@+id/Noti_Test_toolbar"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:background="?attr/colorPrimary"
-        android:minHeight="?attr/actionBarSize"
-        android:theme="?attr/actionBarTheme"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:id="@+id/CommentToolbar"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.111"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <ImageView
+                android:id="@+id/toolbar_btn_back"
+                android:layout_width="35dp"
+                android:layout_height="35dp"
+                android:layout_alignParentStart="true"
+                android:layout_marginStart="0dp"
+                android:src="@drawable/ic_arrow_back" />
+
+            <TextView
+                android:id="@+id/toolbar_username"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_toRightOf="@+id/toolbar_btn_back"
+                android:gravity="center"
+                android:text="UserID"
+                android:textSize="16sp" />
+
+            <ImageView
+                android:id="@+id/toolbar_title_image"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_alignParentTop="true"
+                android:layout_marginTop="0dp"
+                android:src="@drawable/logo" />
+        </RelativeLayout>
+
+    </androidx.appcompat.widget.Toolbar>
+
+    <LinearLayout
+        android:id="@+id/toolbar_division"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_below="@id/CommentToolbar"
+        android:background="@color/design_default_color_background"
+        android:orientation="horizontal" />
+
+    <!-- Contents -->
 
     <androidx.recyclerview.widget.RecyclerView
-        android:layout_width="0dp"
+        android:id="@+id/comment_recyclerview"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:layout_constraintBottom_toTopOf="@+id/Noti_Test_toolbar"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
-</androidx.constraintlayout.widget.ConstraintLayout>
+        android:layout_below="@id/toolbar_division"
+        android:layout_marginTop="8dp"
+        android:layout_marginBottom="30dp" />
+
+    <Button
+        android:id="@+id/comment_btn_send"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/comment_recyclerview"
+        android:layout_margin="10dp"
+        android:text="send"
+        android:theme="@style/Widget.AppCompat.ActionBar.TabBar"
+        android:layout_alignParentRight="true" />
+
+    <EditText
+        android:id="@+id/comment_edit_message"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/comment_recyclerview"
+        android:layout_margin="10dp"
+
+        android:layout_toLeftOf="@id/comment_btn_send" />
+
+
+</RelativeLayout>

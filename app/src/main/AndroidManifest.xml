@@ -39,7 +39,7 @@
                 android:value="" />
         </activity>
         <activity
-            android:name=".NotifyActivity"
+            android:name=".Alert.NotifyActivity"
             android:exported="false">
             <meta-data
                 android:name="android.app.lib_name"

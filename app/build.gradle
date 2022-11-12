@@ -40,6 +40,12 @@ android {
 
 dependencies {
 
+
+    implementation "com.squareup.okhttp3:okhttp:4.9.0"
+    implementation 'com.google.code.gson:gson:2.9.0'
+
+
+    implementation 'com.google.firebase:firebase-messaging:23.1.0'
     implementation 'androidx.core:core-ktx:1.9.0'
     implementation fileTree(include: ['*.jar'], dir: 'libs')
     implementation 'androidx.appcompat:appcompat:1.5.1'
@@ -60,3 +66,5 @@ dependencies {
     implementation 'com.google.firebase:firebase-analytics-ktx'
     implementation 'com.google.firebase:firebase-auth-ktx'
 }
+
+apply plugin: 'com.google.gms.google-services'

@@ -1,62 +1,152 @@
-package com.example.a_sns
+package com.example.a_sns.Alert
 
-import android.Manifest
-import android.app.NotificationChannel
-import android.app.NotificationManager
-import android.app.PendingIntent
-import android.content.Context
-import android.content.Intent
-import android.content.pm.PackageManager
-import android.graphics.BitmapFactory
-import android.os.Build
+
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.view.Menu
-import android.view.MenuItem
-import androidx.activity.result.contract.ActivityResultContracts
-import androidx.annotation.RequiresApi
-import androidx.appcompat.app.AlertDialog
-import androidx.core.app.NotificationCompat
-import androidx.core.app.NotificationManagerCompat
-import androidx.core.app.TaskStackBuilder
-import com.example.a_sns.databinding.ActivityNotifyBinding
-import com.example.a_sns.databinding.ActivityPostingBinding
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
+import android.view.*
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
+import com.bumptech.glide.request.RequestOptions
+import com.example.a_sns.*
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.FirebaseUser
+import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.firestore.ListenerRegistration
+import kotlinx.android.synthetic.main.activity_notify.*
+import kotlinx.android.synthetic.main.item_comment.view.*
+
 
 class NotifyActivity : AppCompatActivity() {
 
-    lateinit var binding: ActivityNotifyBinding
-
+    var contentUid: String? = null
+    var user: FirebaseUser? = null
+    var destinationUid: String? = null
+    var fcmPush: FcmPush? = null
+    var commentSnapshot: ListenerRegistration? = null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = ActivityNotifyBinding.inflate(layoutInflater)
-        setContentView(binding.root)
+        setContentView(R.layout.activity_notify)
 
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) { // Android 8.0
-            createNotificationChannel()
+        user = FirebaseAuth.getInstance().currentUser
+        destinationUid = intent.getStringExtra("destinationUid")
+        contentUid = intent.getStringExtra("contentUid")
+        fcmPush = FcmPush()
+
+        comment_btn_send.setOnClickListener {
+            val comment = ContentDTO.Comment()
+
+            comment.userId = FirebaseAuth.getInstance().currentUser!!.email
+            comment.comment = comment_edit_message.text.toString()
+            comment.uid = FirebaseAuth.getInstance().currentUser!!.uid
+            comment.timestamp = System.currentTimeMillis()
+
+            FirebaseFirestore.getInstance()
+                .collection("images")
+                .document(contentUid!!)
+                .collection("comments")
+                .document()
+                .set(comment)
+
+            commentAlarm(destinationUid!!, comment_edit_message.text.toString())
+            comment_edit_message.setText("")
+
         }
 
-        initSetting()
+        comment_recyclerview.adapter = CommentRecyclerViewAdapter()
+        comment_recyclerview.layoutManager = LinearLayoutManager(this)
 
     }
 
-    private fun initSetting() {
 
-        setSupportActionBar(binding.NotiTestToolbar)
-
-        supportActionBar!!.setDisplayHomeAsUpEnabled(true)  // 왼쪽 버튼 사용 여부 true
-        supportActionBar!!.setHomeAsUpIndicator(R.drawable.baseline_home_24)  // 왼쪽 버튼 아이콘 설정
-        supportActionBar!!.setTitle("All Likes And Comments")
+    override fun onStop() {
+        super.onStop()
+        commentSnapshot?.remove()
     }
 
 
+    fun commentAlarm(destinationUid: String, message: String) {
 
-    override fun onCreateOptionsMenu(menu: Menu): Boolean {
-        menuInflater.inflate(R.menu.notify_menu, menu)
-        return super.onCreateOptionsMenu(menu)
+        val alarmDTO = AlertDTO()
+        alarmDTO.destinationUid = destinationUid
+        alarmDTO.userId = user?.email
+        alarmDTO.uid = user?.uid
+        alarmDTO.kind = 1
+        alarmDTO.message = message
+        alarmDTO.timestamp = System.currentTimeMillis()
+
+        FirebaseFirestore.getInstance().collection("alarms").document().set(alarmDTO)
+
+        var message =
+            user?.email + getString(R.string.follower) + message + getString(R.string.follower)
+        fcmPush?.sendMessage(destinationUid, "알림 메세지 입니다.", message)
     }
+
+
+    inner class CommentRecyclerViewAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+        val comments: ArrayList<ContentDTO.Comment>
+
+        init {
+            comments = ArrayList()
+            commentSnapshot = FirebaseFirestore
+                .getInstance()
+                .collection("images")
+                .document(contentUid!!)
+                .collection("comments")
+                .addSnapshotListener { querySnapshot, firebaseFirestoreException ->
+                    comments.clear()
+                    if (querySnapshot == null) return@addSnapshotListener
+                    for (snapshot in querySnapshot?.documents!!) {
+                        comments.add(snapshot.toObject(ContentDTO.Comment::class.java)!!)
+                    }
+                    notifyDataSetChanged()
+
+                }
+
+        }
+
+        override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
+            val view = LayoutInflater.from(parent.context)
+                .inflate(R.layout.item_comment, parent, false)
+            return CustomViewHolder(view)
+        }
+
+        override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
+
+            var view = holder.itemView
+
+            // Profile Image
+            FirebaseFirestore.getInstance()
+                .collection("profileImages")
+                .document(comments[position].uid!!)
+                .addSnapshotListener { documentSnapshot, firebaseFirestoreException ->
+                    if (documentSnapshot?.data != null) {
+
+                        val url = documentSnapshot?.data!!["image"]
+                        Glide.with(holder.itemView.context)
+                            .load(url)
+                            .apply(RequestOptions().circleCrop())
+                            .into(view.comment_imageview_profile)
+                    }
+                }
+
+            view.comment_textview_profile.text = comments[position].userId
+            view.comment_textview_comment.text = comments[position].comment
+        }
+
+        override fun getItemCount(): Int {
+
+            return comments.size
+        }
+
+        private inner class CustomViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView)
+    }
+}
+
+
+
+    //@@@@@@@@@@@@@@@@@@@@
+/*
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
 
@@ -198,4 +288,5 @@ class NotifyActivity : AppCompatActivity() {
         NotificationManagerCompat.from(this)
             .notify(myNotificationID, builder.build())
     }
-}
+
+     */
