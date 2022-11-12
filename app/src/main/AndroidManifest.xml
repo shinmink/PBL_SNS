@@ -25,7 +25,7 @@
         android:theme="@style/Theme.A_SNS"
         tools:targetApi="31">
         <activity
-            android:name=".SearchingActivity"
+            android:name=".search.SearchingActivity"
             android:exported="false">
             <meta-data
                 android:name="android.app.lib_name"
@@ -39,7 +39,7 @@
                 android:value="" />
         </activity>
         <activity
-            android:name=".Alert.NotifyActivity"
+            android:name=".alert.NotifyActivity"
             android:exported="false">
             <meta-data
                 android:name="android.app.lib_name"

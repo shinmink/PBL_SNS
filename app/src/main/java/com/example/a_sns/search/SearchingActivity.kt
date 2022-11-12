@@ -1,11 +1,15 @@
-package com.example.a_sns
+package com.example.a_sns.search
 
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.Menu
 import androidx.appcompat.widget.SearchView
-import com.example.a_sns.Alert.NotifyActivity
+import com.example.a_sns.alert.NotifyActivity
+import com.example.a_sns.MainActivity
+import com.example.a_sns.PostingActivity
+import com.example.a_sns.R
+import com.example.a_sns.UserFragment
 import com.example.a_sns.databinding.ActivitySearchingBinding
 import com.google.firebase.auth.FirebaseAuth
 import kotlinx.android.synthetic.main.activity_searching.*
@@ -33,12 +37,12 @@ class SearchingActivity : AppCompatActivity() {
                     startActivity(intent)
                 }
 
-                R.id.action_add_photo -> {
+                R.id.action_posting -> {
                     val intent = Intent(this, PostingActivity::class.java)
                     startActivity(intent)
                 }
 
-                R.id.action_favorite_alarm -> { // 하트, 알람 버튼 클릭
+                R.id.action_alarm -> { // 하트, 알람 버튼 클릭
                     val intent = Intent(this, NotifyActivity::class.java)
                     startActivity(intent)
                 }
