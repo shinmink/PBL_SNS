@@ -1,29 +1,18 @@
-package com.example.a_sns
+package com.example.a_sns.Alert
 
-import android.Manifest
-import android.app.NotificationChannel
-import android.app.NotificationManager
-import android.app.PendingIntent
-import android.content.Context
+
+
 import android.content.Intent
-import android.content.pm.PackageManager
-import android.graphics.BitmapFactory
+
 import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.view.Menu
-import android.view.MenuItem
-import androidx.activity.result.contract.ActivityResultContracts
-import androidx.annotation.RequiresApi
-import androidx.appcompat.app.AlertDialog
-import androidx.core.app.NotificationCompat
-import androidx.core.app.NotificationManagerCompat
-import androidx.core.app.TaskStackBuilder
+import android.view.*
+import com.example.a_sns.*
 import com.example.a_sns.databinding.ActivityNotifyBinding
-import com.example.a_sns.databinding.ActivityPostingBinding
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
+import com.google.firebase.auth.FirebaseAuth
+import kotlinx.android.synthetic.main.activity_main.*
+
 
 class NotifyActivity : AppCompatActivity() {
 
@@ -34,29 +23,79 @@ class NotifyActivity : AppCompatActivity() {
         binding = ActivityNotifyBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+
+
+        data class NotificationDto(
+            var destinationUid: String? = "",
+            var sender: String? = "",
+            var senderUid: String? = "",
+            var type: Int? = null,
+            var timestamp: Long? = null,
+            var timeInfo: String? = "",
+            var contentUid: String? = ""
+        )
+
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) { // Android 8.0
-            createNotificationChannel()
+            //createNotificationChannel()
         }
 
-        initSetting()
+        bottom_navigation.setOnNavigationItemReselectedListener {
+            when (it.itemId) {
+                R.id.action_home -> { // 홈 버튼 클릭
+                    val intent = Intent(this, MainActivity::class.java)
+                    startActivity(intent)
+                }
+
+                R.id.action_search -> { // 서치 버튼 클릭
+                    val intent = Intent(this, SearchingActivity::class.java)
+                    startActivity(intent)
+                }
+
+                R.id.action_add_photo -> {
+                    val intent = Intent(this, PostingActivity::class.java)
+                    startActivity(intent)
+                }
+
+                R.id.action_favorite_alarm -> { // 하트, 알람 버튼 클릭
+                    val intent = Intent(this, NotifyActivity::class.java)
+                    startActivity(intent)
+                }
+
+                R.id.action_account -> {
+                    var userFragment = UserFragment()
+                    var bundle = Bundle()
+                    var uid = FirebaseAuth.getInstance().currentUser?.uid
+
+                    bundle.putString("destinationUid", uid)
+                    userFragment.arguments = bundle
+                    supportFragmentManager.beginTransaction()
+                        .replace(R.id.main_content, userFragment).commit()
+                }
+            }
+        }
 
     }
 
-    private fun initSetting() {
-
-        setSupportActionBar(binding.NotiTestToolbar)
-
-        supportActionBar!!.setDisplayHomeAsUpEnabled(true)  // 왼쪽 버튼 사용 여부 true
-        supportActionBar!!.setHomeAsUpIndicator(R.drawable.baseline_home_24)  // 왼쪽 버튼 아이콘 설정
-        supportActionBar!!.setTitle("All Likes And Comments")
-    }
-
-
+    data class NotifyDto(
+        var destinationUid: String? = null,
+        var userId: String? = null,
+        var uid: String? = null,
+        var kind: Int = 0, //0 : 좋아요, 1: 메세지, 2: 팔로우
+        var message: String? = null,
+        var timestamp: Long? = null
+    )
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         menuInflater.inflate(R.menu.notify_menu, menu)
         return super.onCreateOptionsMenu(menu)
     }
+
+}
+
+
+
+    //@@@@@@@@@@@@@@@@@@@@
+/*
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
 
@@ -198,4 +237,5 @@ class NotifyActivity : AppCompatActivity() {
         NotificationManagerCompat.from(this)
             .notify(myNotificationID, builder.build())
     }
-}
+
+     */
