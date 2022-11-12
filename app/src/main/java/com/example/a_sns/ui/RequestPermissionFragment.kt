@@ -13,6 +13,7 @@ import androidx.core.content.ContextCompat.checkSelfPermission
 import androidx.fragment.app.Fragment
 import com.example.a_sns.StartActivity
 import com.example.a_sns.R
+import kotlinx.coroutines.*
 
 class RequestPermissionFragment : Fragment(R.layout.request_permission_fragment) {
     private var perms = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) // Android 10.0 이상
@@ -37,28 +38,40 @@ class RequestPermissionFragment : Fragment(R.layout.request_permission_fragment)
     override fun onAttach(context: Context) {
         super.onAttach(context)
 
-        // if permission is granted, start LoginFragment
         val requestPerms = perms.filter { checkSelfPermission(requireActivity(), it) != PackageManager.PERMISSION_GRANTED } // 여러 권한 확인
-        if (requestPerms.isEmpty()) {
-            (requireActivity() as StartActivity).changeFragment(LoginFragment())
+        if (requestPerms.isEmpty()) { // 모든 권한이 허용되어 있으면 종료
             requireActivity().supportFragmentManager.beginTransaction().remove(this).commit()
         }
     }
 
+    @OptIn(DelicateCoroutinesApi::class)
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
 
 
         val allowBtn = view.findViewById<View>(R.id.requestPermission_allowBtn)
         allowBtn.setOnClickListener {
             requestMultiplePermission(perms)
 
-            // if permission is granted, start LoginFragment
-            val requestPerms = perms.filter { checkSelfPermission(requireActivity(), it) != PackageManager.PERMISSION_GRANTED } // 여러 권한 확인
-            if (requestPerms.isEmpty())
-                (requireActivity() as StartActivity).changeFragment(LoginFragment())
+            GlobalScope.launch {
+                repeat (10) { // 5초 동안 권한 체크 후 종료
+                    // if permission is granted, start LoginFragment
+                    val requestPerms = perms.filter {
+                        checkSelfPermission(
+                            requireActivity(),
+                            it
+                        ) != PackageManager.PERMISSION_GRANTED
+                    } // 여러 권한 확인
+                    if (requestPerms.isEmpty()) {
+                        cancel()
+                        (requireActivity() as StartActivity).changeFragment(LoginFragment())
+                    }
+                    delay(1000L)
+                }
+            }
         }
+
+
     }
 
     private fun requestMultiplePermission(perms: Array<String>) {

@@ -27,20 +27,15 @@ class UserFragment : Fragment(), BottomNavigationView.OnNavigationItemSelectedLi
         firestore = FirebaseFirestore.getInstance()
         auth = FirebaseAuth.getInstance()
         currentUserUid = auth?.currentUser?.uid
-        val activity = MainActivity()
+        //val activity = MainActivity()
 
         if(uid == currentUserUid){
             //MyPage
             fragmentView?.account_btn_follow_signout?.text = getString(R.string.signout)
             fragmentView?.account_btn_follow_signout?.setOnClickListener {
-                activity.finish()
-                //startActivity(Intent(activity,LoginActivity::class.java))
-                // 명환님 수정 예정 LoginActivity 부분
-                //val loginFragment = LoginFragment()
-                //childFragmentManager.beginTransaction()
-                //    .replace(R.id.main_content, loginFragment).commit()
                 auth?.signOut()
-                activity.gotoLoginFragment()
+                activity?.startActivity(Intent(activity,StartActivity::class.java))
+                activity?.finish()
             }
         }
         return fragmentView

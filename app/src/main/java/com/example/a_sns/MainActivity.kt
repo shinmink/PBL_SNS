@@ -105,8 +105,6 @@ class MainActivity : AppCompatActivity() {
     }
 
     fun gotoLoginFragment() {
-        val loginFragment = LoginFragment()
-        supportFragmentManager.beginTransaction()
-            .replace(R.id.main_content, loginFragment).commit()
+        Intent(this, StartActivity::class.java)
     }
 }

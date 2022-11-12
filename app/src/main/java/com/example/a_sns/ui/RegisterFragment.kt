@@ -8,6 +8,7 @@ import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.Fragment
 import com.example.a_sns.R
+import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
 
@@ -63,7 +64,7 @@ class RegisterFragment : Fragment(R.layout.register_fragment) {
                         .setTitle("회원가입 성공")
                         .setMessage("로그인 화면으로 이동합니다.")
                         .setPositiveButton("확인") { _, _ ->
-                            requireActivity().supportFragmentManager.beginTransaction().remove(this).commit()
+                            FirebaseAuth.getInstance().signOut() // 회원가입하면 자동 login 되기 때문에 signOut
                             requireActivity().supportFragmentManager.popBackStack()
                         }
                         .show()

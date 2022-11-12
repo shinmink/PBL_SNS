@@ -37,7 +37,7 @@ class LoginFragment : Fragment(R.layout.login_fragment) {
         //click register text
         val registerBtn = view.findViewById<TextView>(R.id.login_register)
         registerBtn.setOnClickListener {
-            (activity as StartActivity).changeFragment(RegisterFragment())
+            (activity as StartActivity).changeFragmentBackStack(RegisterFragment())
         }
     }
 
