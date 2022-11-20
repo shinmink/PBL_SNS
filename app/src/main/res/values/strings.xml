@@ -22,4 +22,9 @@
     <string name="long_notification_body">"This is very long notification body! This is very long notification body! This is very long notification body! This is very long notification body! This is very long notification body! This is very long notification body! "</string>
     <string name="no_permission">App has no permission %1$s. Some features would not work correctly.</string>
     <string name="req_permission_reason">앱 실행에 %1$s 권한이 필요합니다. 허용하시겠습니까?</string>
+    <string name="userid">UserID</string>
+    <string name="follow_cancel">Follow cancel</string>
+    <string name="send">Send</string>
+    <string name="alarm_comment">Alarm_Comment</string>
+    <string name="alarm_favorite">Alarm_Favorite</string>
 </resources>
