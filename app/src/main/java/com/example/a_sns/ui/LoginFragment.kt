@@ -37,7 +37,7 @@ class LoginFragment : Fragment(R.layout.login_fragment) {
         //click register text
         val registerBtn = view.findViewById<TextView>(R.id.login_register)
         registerBtn.setOnClickListener {
-            (activity as StartActivity).changeFragment(RegisterFragment())
+            (activity as StartActivity).changeFragmentBackStack(RegisterFragment())
         }
     }
 
@@ -51,6 +51,7 @@ class LoginFragment : Fragment(R.layout.login_fragment) {
                         //val user = Firebase.auth.currentUser
                         Toast.makeText(activity, "로그인 성공", Toast.LENGTH_SHORT).show()
                         startActivity(Intent(activity, MainActivity::class.java))
+                        activity?.finish()
                     } else { // 로그인이 실패했을 때
                         Toast.makeText(activity, "로그인 실패. 이메일과 비밀번호를 다시 확인하세요.", Toast.LENGTH_SHORT).show()
                     }

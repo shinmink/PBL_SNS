@@ -1,4 +1,4 @@
-package com.example.a_sns.Alert
+package com.example.a_sns.alert
 
 
 import androidx.appcompat.app.AppCompatActivity
