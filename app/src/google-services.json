@@ -20,7 +20,36 @@
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyB-0AI5biJI_Y1-gbMIKwejH8rIbctLTCE"
+          "current_key": "AIzaSyDJkXmpDemGhlKOGMSNZ_yO4FQXsNkZct8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "348343260951-nr6ci79lj6945tfogvhpif5o1tll7did.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:348343260951:android:1350dd4d1b3f3799e08952",
+        "android_client_info": {
+          "package_name": "com.example.howlstagram_f16"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "348343260951-nr6ci79lj6945tfogvhpif5o1tll7did.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDJkXmpDemGhlKOGMSNZ_yO4FQXsNkZct8"
         }
       ],
       "services": {
