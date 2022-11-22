@@ -4,8 +4,12 @@
     android:layout_height="match_parent">
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/homefragment_recyclerview"
+        android:id="@+id/detailviewfragment_recyclerview"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
+        android:layout_height="match_parent" >
+
+
+    </androidx.recyclerview.widget.RecyclerView>
+
 
 </LinearLayout>
