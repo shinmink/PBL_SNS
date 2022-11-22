@@ -28,6 +28,8 @@ import kotlinx.android.synthetic.main.fragment_user.*
 import kotlinx.android.synthetic.main.fragment_user.view.*
 
 class UserFragment : Fragment(), BottomNavigationView.OnNavigationItemSelectedListener{
+
+
     var fragmentView : View? = null
     var photoUri : Uri? = null
     var firestore : FirebaseFirestore? = null

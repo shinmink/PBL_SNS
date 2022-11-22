@@ -4,18 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".PostingActivity">
-
-    <ProgressBar
-        android:id="@+id/progress_bar"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerInParent="true"
-        android:visibility="gone"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+    tools:context=".CommentActivity">
 
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/MainToolbar"
@@ -57,49 +46,53 @@
 
     </androidx.appcompat.widget.Toolbar>
 
-    <EditText
-        android:id="@+id/DailyText"
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:id="@+id/toolbar_division"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_below="@id/MainToolbar"
+        android:background="@color/colorDivision"
+        android:orientation="horizontal"
+        app:layout_constraintBottom_toTopOf="@+id/MainToolbar"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/comment_recyclerview"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="100dp"
-        android:ems="15"
-        android:gravity="start|top"
-        android:inputType="textMultiLine"
-        android:lines="10"
+        android:layout_below="@id/toolbar_division"
+        android:layout_marginTop="16dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/MainToolbar" />
 
-    <ImageButton
-        android:id="@+id/Add_Image"
-        android:layout_width="100dp"
-        android:layout_height="100dp"
+    <Button
+        android:id="@+id/comment_btn_send"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/comment_recyclerview"
+        android:layout_alignParentRight="true"
+        android:layout_margin="10dp"
         android:layout_marginTop="16dp"
+        android:text="@string/send"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/DailyText"
-        app:srcCompat="@drawable/baseline_add_a_photo_24" />
+        app:layout_constraintTop_toBottomOf="@+id/comment_edit_message" />
 
-    <Button
-        android:id="@+id/BackBtn"
-        android:layout_width="wrap_content"
+    <EditText
+        android:id="@+id/comment_edit_message"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:text="Back"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/SubmitBtn"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/Add_Image" />
+        android:layout_below="@id/comment_recyclerview"
+        android:layout_margin="10dp"
 
-    <Button
-        android:id="@+id/SubmitBtn"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Submit"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_marginTop="16dp"
+        android:layout_toLeftOf="@id/comment_btn_send"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toEndOf="@+id/BackBtn"
-        app:layout_constraintTop_toBottomOf="@+id/Add_Image" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/comment_recyclerview" />
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

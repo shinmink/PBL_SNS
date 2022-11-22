@@ -61,7 +61,7 @@ class SearchFragment : Fragment() {
                 .getInstance().collection("images").orderBy("timestamp")?.addSnapshotListener { querySnapshot, firebaseFirestoreException ->
                     contentDTOs.clear()
                     if (querySnapshot == null) return@addSnapshotListener
-                    for (snapshot in querySnapshot!!.documents) {
+                    for (snapshot in querySnapshot.documents) {
                         contentDTOs.add(snapshot.toObject(ContentDTO::class.java)!!)
                     }
                     notifyDataSetChanged()
@@ -70,7 +70,7 @@ class SearchFragment : Fragment() {
 
         override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
 
-            //현재 사이즈 뷰 화면 크기의 가로 크기의 1/3값을 가지고 오기
+            //가로 1/3
             val width = resources.displayMetrics.widthPixels / 3
 
             val imageView = ImageView(parent.context)
