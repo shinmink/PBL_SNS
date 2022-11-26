@@ -1,5 +1,6 @@
 package com.example.a_sns.activitities
 
+import LoadingDialogFragment
 import android.app.Activity
 import android.content.Intent
 import android.net.Uri
@@ -19,10 +20,14 @@ import java.text.SimpleDateFormat
 import java.util.*
 
 class PostingActivity : AppCompatActivity() {
-    var storage : FirebaseStorage? = null
-    var photoUri : Uri? = null
-    var auth : FirebaseAuth? = null
-    var firestore : FirebaseFirestore? = null
+    var storage: FirebaseStorage? = null
+    var photoUri: Uri? = null
+    var auth: FirebaseAuth? = null
+    var firestore: FirebaseFirestore? = null
+
+    //Initialize Loader
+    private val loadingDialogFragment by lazy { LoadingDialogFragment() }
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -36,29 +41,42 @@ class PostingActivity : AppCompatActivity() {
         //Open the album
         addphoto_btn_addimage.setOnClickListener {
             val photoPickerIntent = Intent(Intent.ACTION_PICK)
-            photoPickerIntent.setDataAndType(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, "image/*")
+            photoPickerIntent.setDataAndType(
+                MediaStore.Images.Media.EXTERNAL_CONTENT_URI,
+                "image/*"
+            )
             imageResult.launch(photoPickerIntent)
         }
 
         //add image upload event
         addphoto_btn_upload.setOnClickListener {
+            //Show Loader
+            if (!loadingDialogFragment.isAdded) {
+                loadingDialogFragment.show(supportFragmentManager, "loader")
+            }
             contentUpload()
+            //Hide Loader
+            if (loadingDialogFragment.isAdded) {
+                loadingDialogFragment.dismissAllowingStateLoss()
+            }
         }
+
     }
 
-    private val imageResult = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
-        if (result.resultCode == Activity.RESULT_OK) {
-            val data: Intent? = result.data
-            photoUri = data?.data
-            Glide.with(this).load(photoUri).into(addphoto_image)
-            // Toast
-        } else {
-            finish()
+    private val imageResult =
+        registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
+            if (result.resultCode == Activity.RESULT_OK) {
+                val data: Intent? = result.data
+                photoUri = data?.data
+                Glide.with(this).load(photoUri).into(addphoto_image)
+                // Toast
+            } else {
+                finish()
+            }
         }
-    }
 
 
-    private fun contentUpload(){
+    private fun contentUpload() {
         val timestamp = SimpleDateFormat("yyyyMMdd_HHmmss").format(Date())
         val imageFileName = "IMAGE_" + timestamp + "_.png"
 
@@ -67,7 +85,7 @@ class PostingActivity : AppCompatActivity() {
         //promise method
         storageRef?.putFile(photoUri!!)?.continueWithTask {
             return@continueWithTask storageRef.downloadUrl
-        }?.addOnSuccessListener { uri->
+        }?.addOnSuccessListener { uri ->
             val contentDTO = ContentDTO()
 
             //Insert downloadUrl of image
