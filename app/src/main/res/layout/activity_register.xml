@@ -30,15 +30,15 @@
 
     <EditText
         android:id="@+id/register_editEmail"
-        android:layout_width="228dp"
+        android:layout_width="330dp"
         android:layout_height="48dp"
-        android:layout_marginStart="40dp"
         android:layout_marginTop="44dp"
         android:ems="12"
         android:hint="아이디(Email)"
         android:inputType="textEmailAddress"
         android:minHeight="48dp"
         android:textSize="16sp"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -69,16 +69,5 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView7" />
-
-    <Button
-        android:id="@+id/register_checkDupBtn"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="44dp"
-        android:text="중복 확인"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.326"
-        app:layout_constraintStart_toEndOf="@+id/register_editEmail"
-        app:layout_constraintTop_toTopOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
