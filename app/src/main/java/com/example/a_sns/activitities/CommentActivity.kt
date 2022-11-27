@@ -5,6 +5,8 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.activity.OnBackPressedCallback
+import androidx.activity.OnBackPressedDispatcher
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
@@ -17,6 +19,7 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import kotlinx.android.synthetic.main.activity_comment.*
 import kotlinx.android.synthetic.main.item_comment.view.*
+import org.jetbrains.annotations.Contract
 
 class CommentActivity : AppCompatActivity() {
     var contentUid : String? = null
@@ -45,6 +48,10 @@ class CommentActivity : AppCompatActivity() {
             comment_edit_message.setText("")
 
         }
+
+        comment_btn_back?.setOnClickListener{
+            finish()
+        }
     }
 
     private fun commentAlarm(destinationUid : String, message : String){
@@ -59,7 +66,7 @@ class CommentActivity : AppCompatActivity() {
 
         // TODO : FCM Push
         val msg = FirebaseAuth.getInstance().currentUser?.email + " " + getString(R.string.alarm_comment) + " of " + message
-        FcmPush.instance.sendMessage(destinationUid, "Howlstagram" , msg)
+        FcmPush.instance.sendMessage(destinationUid, "sangsang" , msg)
     }
 
     inner class CommentRecyclerviewAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>(){
@@ -104,7 +111,12 @@ class CommentActivity : AppCompatActivity() {
                 .addOnCompleteListener { task ->
                     if (task.isSuccessful){
                         val url = task.result!!["image"]
-                        Glide.with(p0.itemView.context).load(url).apply(RequestOptions().circleCrop()).into(view.commentviewitem_imageview_profile)
+                        Glide
+                            .with(p0.itemView.context)
+                            .load(url)
+                            .apply(RequestOptions()
+                                .circleCrop())
+                            .into(view.commentviewitem_imageview_profile)
                     }
                 }
         }

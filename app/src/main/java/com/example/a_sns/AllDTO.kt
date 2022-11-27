@@ -71,36 +71,35 @@ class FcmPush {
         gson = Gson()
         okHttpClient = OkHttpClient()
     }
-    fun sendMessage(destinationUid : String, title : String, message : String){
-        FirebaseMessaging.getInstance().token.addOnCompleteListener { task ->
-            if(task.isSuccessful){
-                var token = task.result
-
+    fun sendMessage(destinationUid: String, title: String, message: String) {
+        FirebaseFirestore.getInstance().collection("pushtokens")
+            .document(destinationUid).get().addOnCompleteListener { task ->
+            if (task.isSuccessful) {
+                var token = task.result["pushtoken"].toString()
+                println(token)
                 var pushDTO = PushDTO()
                 pushDTO.to = token
-                pushDTO.notification.title = title
-                pushDTO.notification.body = message
+                pushDTO.notification?.title = title
+                pushDTO.notification?.body = message
 
-                var body = gson?.toJson(pushDTO)?.toRequestBody(JSON)
+                var body = gson?.toJson(pushDTO)?.let { RequestBody.create(JSON, it) }
                 var request = body?.let {
-                    Request.Builder()
-                        .addHeader("Content-Type","application/json")
-                        .addHeader("Authorization", "key=$serverKey")
+                    Request
+                        .Builder()
+                        .addHeader("Content-Type", "application/json")
+                        .addHeader("Authorization", "key=" + serverKey)
                         .url(url)
                         .post(it)
                         .build()
                 }
-
                 if (request != null) {
-                    okHttpClient?.newCall(request)?.enqueue(object : Callback{
+                    okHttpClient?.newCall(request)?.enqueue(object : Callback {
                         override fun onFailure(call: Call, e: IOException) {
-
                         }
 
                         override fun onResponse(call: Call, response: Response) {
                             println(response.body?.string())
                         }
-
                     })
                 }
             }
